@@ -1,0 +1,18 @@
+#!/bin/bash
+
+SHELLEGRAM=./shellegram
+
+#which gdialog 2> /dev/null && DIALOG=gdialog || DIALOG=dialog
+DIALOG=./gdialog
+
+CHOICE=$($DIALOG --menu Menu 10 40 40 list "List available chats" msg "Send message" 2>&1 > /dev/null | cut -d'|' -f1)
+if [ "$CHOICE" == 'list' ];
+	then
+	$SHELLEGRAM list
+elif [ "$CHOICE" == 'msg' ];
+	then
+	IDS=$($SHELLEGRAM list | grep -o '[0-9]*' | awk '{print $1, $1}')
+	CHOICE=$($DIALOG --menu "Available chat IDs" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
+	TEXT=$($DIALOG --inputbox "Enter text" 10 10 2>&1 >/dev/null)
+	$SHELLEGRAM msg $CHOICE $TEXT
+fi
