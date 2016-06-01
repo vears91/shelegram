@@ -1,7 +1,9 @@
 #!/bin/bash
+GETTEXT='gettext -d shellegram'
 
 help () {
-	echo "Usage: $0 []"
+	USAGE=$($GETTEXT "Usage")
+	echo "$USAGE : $0 ( list | msg chat_id text)"
 }
 
 if [ $# -eq 1 ]
@@ -11,6 +13,8 @@ then
                 help
 	elif [ $1 == "list" ]
 	then
+		AVAILABLE=$($GETTEXT "Available IDs to chat")
+		echo $AVAILABLE
 		curl https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/getUpdates | grep -Po '(?<="id":)[0-9]+' | sort | uniq
 	else
 		help
@@ -21,9 +25,9 @@ elif [ $# -eq 3 ]
         if [ \( $1 == "msg" \) -o \( "$2" -eq "$2" 2>/dev/null \) ]
         then
 		curl -X GET --data "chat_id=$2&text=$3"  https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/sendMessage
-                echo "msg"
         else
-		echo "Invalid command"
+		INVALID=$($GETTEXT "Invalid command")
+		echo $INVALID
                 help
         fi
 
