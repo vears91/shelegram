@@ -1,0 +1,12 @@
+# default: on
+# description: xinetd server for the shellegram application
+service shellegram
+{
+        flags           = REUSE
+        socket_type     = stream
+        wait            = no
+        user            = nobody
+        server          = /usr/local/bin/shellegram
+        disable         = no
+}
+
