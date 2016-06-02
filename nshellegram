@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SHELLEGRAM=shellegram
+read COMMAND
+
+if [ $COMMAND == "list" ]
+    then
+    	$SHELLEGRAM list
+else
+	ID=$(echo $COMMAND | cut -f1 -d'|')
+	TEXT=$(echo $COMMAND | cut -f2 -d'|')
+	$SHELLEGRAM msg $ID $TEXT
+fi
+
