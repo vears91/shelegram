@@ -23,3 +23,6 @@ msgstr "IDs encontrados"
 
 msgid "Enter text"
 msgstr "Ingresar texto"
+
+msgid "Continue?"
+msgstr "Continuar?"

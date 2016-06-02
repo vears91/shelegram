@@ -1,8 +1,6 @@
 #!/bin/bash
 
-
 SHELLEGRAM=shellegram
-
 if [ $# -ge 1 ]
 then
         if [ $1 -a $2 ]
@@ -13,41 +11,50 @@ then
                 exit -2
         fi
 fi
-
-#which gdialog 2> /dev/null && DIALOG=gdialog || DIALOG=dialog
-DIALOG=./gdialog
+DIALOG=gdialog
 GETTEXT='gettext -d shellegram_ui'
-
 LIST=$($GETTEXT "List available chats")
 MSG=$($GETTEXT "Send message")
 AVAILABLE=$($GETTEXT "Available chat IDs")
 ENTER=$($GETTEXT "Enter text")
+CONTINUE=$($GETTEXT "Continue?")
 
-CHOICE=$($DIALOG --menu Menu 10 40 40 list "$LIST" msg "$MSG" 2>&1 > /dev/null | cut -d'|' -f1)
-if [ "$CHOICE" == 'list' ]
-then
-	if [ $# -ge 1 ]
+end () {
+	exit 0
+}
+
+while true
+do
+	CHOICE=$($DIALOG --menu Menu 10 8 4 list "$LIST" msg "$MSG" 2>&1 > /dev/null | cut -d'|' -f1)
+	if [ "$CHOICE" == 'list' ]
 	then
-		IDS=$(echo "list" | $SHELLEGRAM | grep -o '[0-9]*') 
-	else
-		IDS=$($SHELLEGRAM list | grep -o '[0-9]*')
+		if [ $# -ge 1 ]
+		then
+			IDS=$(echo "list" | $SHELLEGRAM | grep -o '[0-9]*') 
+		else
+			IDS=$($SHELLEGRAM list | grep -o '[0-9]*')
+		fi
+		$DIALOG --infobox "$IDS" 10 30 
+	elif [ "$CHOICE" == 'msg' ]
+	then
+		if [ $# -ge 1 ]
+		then
+		    IDS=$(echo "list" | $SHELLEGRAM | grep -o '[0-9]*' | awk '{print $1, $1}')
+			CHOICE=$($DIALOG --menu "$AVAILABLE" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
+			TEXT=$($DIALOG --inputbox "$ENTER" 10 10 2>&1 >/dev/null)
+			echo "$CHOICE|$TEXT" | $SHELLEGRAM 
+		else
+			IDS=$($SHELLEGRAM list | grep -o '[0-9]*' | awk '{print $1, $1}')
+			CHOICE=$($DIALOG --menu "$AVAILABLE" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
+			TEXT=$($DIALOG --inputbox "$ENTER" 10 10 2>&1 >/dev/null)
+			echo $CHOICE
+			echo $TEXT
+			$SHELLEGRAM msg $CHOICE $TEXT 
+		fi	
 	fi
-	$DIALOG --infobox "$IDS" 10 30 
-elif [ "$CHOICE" == 'msg' ]
-then
-	
-	if [ $# -ge 1 ]
-	then
-	    IDS=$(echo "list" | $SHELLEGRAM | grep -o '[0-9]*' | awk '{print $1, $1}')
-		CHOICE=$($DIALOG --menu "$AVAILABLE" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
-		TEXT=$($DIALOG --inputbox "$ENTER" 10 10 2>&1 >/dev/null)
-		echo "$CHOICE|$TEXT" | $SHELLEGRAM 
-	else
-		IDS=$($SHELLEGRAM list | grep -o '[0-9]*' | awk '{print $1, $1}')
-		CHOICE=$($DIALOG --menu "$AVAILABLE" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
-		TEXT=$($DIALOG --inputbox "$ENTER" 10 10 2>&1 >/dev/null)
-		$SHELLEGRAM msg $CHOICE $TEXT 
-	fi	
-fi
+
+	$DIALOG --yesno CONTINUE 10 10 || end
+
+done
 
 exit 0
