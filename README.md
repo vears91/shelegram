@@ -6,8 +6,10 @@ This application is the evaluation for the Linux/Unix seminar that took place in
 
 You can add the bot with [this link](https://telegram.me/sdn_evaluation_bot)
 
-## Installation
+To see your ID, you should send any message from Telegram to the bot. After this you will be able to see your ID.
 
+## Installation
+ 
 ```
 make install
 ```
