@@ -4,7 +4,7 @@
 
 This application is the evaluation for the Linux/Unix seminar that took place in 2016 at ITMO University in Saint Petersburg, Russia, as part of the PERCCOM master.
 
-You can add the bot with telegram.me/sdn_evaluation_bot
+You can add the bot with [this link](https://telegram.me/sdn_evaluation_bot)
 
 ## Installation
 
