@@ -6,7 +6,7 @@ service shellegram
         socket_type     = stream
         wait            = no
         user            = nobody
-        server          = /usr/local/bin/shellegram
+        server          = /usr/local/bin/nshellegram
         disable         = no
 }
 

@@ -15,7 +15,7 @@ then
 	then
 		AVAILABLE=$($GETTEXT "Available IDs to chat")
 		echo $AVAILABLE
-		curl https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/getUpdates | grep -Po '(?<="id":)[0-9]+' | sort | uniq
+		curl -s https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/getUpdates | grep -Po '(?<="id":)[0-9]+' | sort | uniq
 	else
 		help
         fi
@@ -24,11 +24,11 @@ elif [ $# -eq 3 ]
 	then
         if [ \( $1 == "msg" \) -o \( "$2" -eq "$2" 2>/dev/null \) ]
         then
-		curl -X GET --data "chat_id=$2&text=$3"  https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/sendMessage
+		curl --silent -X GET --data "chat_id=$2&text=$3"  https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/sendMessage
         else
 		INVALID=$($GETTEXT "Invalid command")
 		echo $INVALID
-                help
+        help
         fi
 
 else
