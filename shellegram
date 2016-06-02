@@ -6,6 +6,9 @@ help () {
 	echo "$USAGE : $0 ( list | msg chat_id text)"
 }
 
+
+TOKEN=$(cat /var/local/token)
+
 if [ $# -eq 1 ]
 then
         if [ $1 == "--help" ]
@@ -15,7 +18,7 @@ then
 	then
 		AVAILABLE=$($GETTEXT "Available IDs to chat")
 		echo $AVAILABLE
-		curl -s https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/getUpdates | grep -Po '(?<="id":)[0-9]+' | sort | uniq
+		curl -s "https://api.telegram.org/bot$TOKEN/getUpdates" | grep -Po '(?<="id":)[0-9]+' | sort | uniq
 	else
 		help
         fi
@@ -24,7 +27,7 @@ elif [ $# -eq 3 ]
 	then
         if [ \( $1 == "msg" \) -o \( "$2" -eq "$2" 2>/dev/null \) ]
         then
-		curl --silent -X GET --data "chat_id=$2&text=$3"  https://api.telegram.org/bot194775296:AAFP1mDOYa9EI3itc0PQ4ZyhF0oPCYgc0Dk/sendMessage
+		curl --silent -X GET --data "chat_id=$2&text=$3"  "https://api.telegram.org/bot$TOKEN"/sendMessage
         else
 		INVALID=$($GETTEXT "Invalid command")
 		echo $INVALID
