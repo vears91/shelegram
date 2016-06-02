@@ -3,6 +3,8 @@
 
 SHELLEGRAM=shellegram
 
+GETTEXT='gettext -d shellegram_ui'
+NETWORK=$($GETTEXT "You must set HOST and PORT")
 if [ $# -ge 1 ]
 then
         if [ $1 -a $2 ]
@@ -14,10 +16,8 @@ then
         fi
 fi
 
-#which gdialog 2> /dev/null && DIALOG=gdialog || DIALOG=dialog
 DIALOG=dialog
 GETTEXT='gettext -d shellegram_ui'
-
 LIST=$($GETTEXT "List available chats")
 MSG=$($GETTEXT "Send message")
 AVAILABLE=$($GETTEXT "Available chat IDs")
@@ -64,7 +64,6 @@ do
 	fi
 
 	$DIALOG --yesno $CONTINUE 10 10 || end
-	read WAIT
 
 done
 
