@@ -1,7 +1,7 @@
 # Based on the calc_examples Makefile
 
 install: 
-	install shellegram shellegram_ui nshellegram /usr/local/bin
+	install shellegram nshellegram shellegram_ui shellegram_tui /usr/local/bin
 	which gdialog >/dev/null 2>&1 || install gdialog /usr/local/bin
 	grep -q "`cat shellegram.services`" /etc/services || cat shellegram.services >> /etc/services
 	install shellegram.xinetd /etc/xinetd.d/shellegram
