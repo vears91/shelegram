@@ -59,7 +59,7 @@ do
 			CHOICE=$(cat /tmp/shellegram)
 			$DIALOG --inputbox "$ENTER" 10 10 2> /tmp/shellegram
 			TEXT=$(cat /tmp/shellegram)
-			$SHELLEGRAM msg $CHOICE $TEXT 
+			$SHELLEGRAM msg $CHOICE "$TEXT"
 		fi	
 	fi
 

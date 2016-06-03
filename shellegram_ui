@@ -47,9 +47,7 @@ do
 			IDS=$($SHELLEGRAM list | grep -o '[0-9]*' | awk '{print $1, $1}')
 			CHOICE=$($DIALOG --menu "$AVAILABLE" 10 30 10 $IDS 2>&1 >/dev/null | cut -d'|' -f1)
 			TEXT=$($DIALOG --inputbox "$ENTER" 10 10 2>&1 >/dev/null)
-			echo $CHOICE
-			echo $TEXT
-			$SHELLEGRAM msg $CHOICE $TEXT 
+			$SHELLEGRAM msg $CHOICE "$TEXT"
 		fi	
 	fi
 

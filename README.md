@@ -12,8 +12,8 @@ You can also use your own bot. You may do so by following these steps:
 3. Note the token you will receive to access the HTTP API.
 4. After cloning this project, put your own token in the file called "token"
 5. Install the project by following the instructions provided in this document for installation, i.e. `make install`
-6. From your Telegram app, send any message to the bot you just created. 
-7. You should see your ID listed when running `shellegram list` (for example, you could see the ID 160297054). Now, to send a message to yourself (or to any other ID of an account that has sent a message to your bot). In our example, you would use `shellegram msg 160297054 hello`. A more user-friendly to do this is to use the provided GUI and TUI (see the next sections of this document).
+6. From your Telegram app, open the link for your bot provided by BotFather and press /start and then send any message to the bot you just created. 
+7. After a minute, you should see your ID listed when running `shellegram list` (for example, you could see the ID 160297054). Now, to send a message to yourself (or to any other ID of an account that has sent a message to your bot). In our example, you would use `shellegram msg 160297054 hello`. A more user-friendly to do this is to use the provided GUI and TUI (see the next sections of this document).
 
 To see your ID, you should send any message from Telegram to the bot. After this you will be able to see your ID.
 
